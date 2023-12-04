@@ -1,20 +1,13 @@
-// sokoban.js
+import { Graphics } from "pixi.js";
 
-// Constants
-const tileSize = 50;
-const rowCount = 5;
-const colCount = 5;
+import { App } from "./app";
+
+import { TILES_SIZE, ROW_COUNT, COL_COUNT } from "./constants";
+
+document.body.appendChild(App.view);
 
 // Level map
 const levelMap = ["WWWWW", "WP..W", "W.B.W", "W...W", "WWWWW"];
-
-// Create Pixi Applicationz
-const app = new PIXI.Application({
-    width: colCount * tileSize,
-    height: rowCount * tileSize,
-    backgroundColor: 0xaaaaaa,
-});
-document.body.appendChild(app.view);
 
 // Game state
 let playerPosition = {};
@@ -22,8 +15,8 @@ const boxPositions = [];
 const wallPositions = [];
 
 // Parse level map to initialize positions
-for (let row = 0; row < rowCount; row++) {
-    for (let col = 0; col < colCount; col++) {
+for (let row = 0; row < ROW_COUNT; row++) {
+    for (let col = 0; col < COL_COUNT; col++) {
         const tile = levelMap[row][col];
         if (tile === "P") {
             playerPosition = { row, col };
@@ -36,23 +29,23 @@ for (let row = 0; row < rowCount; row++) {
 }
 
 // Create player square
-const playerSquare = createSquare(0x00ff00); // Green color
+const playerSquare = createSquare("green");
 placeSquare(playerSquare, playerPosition);
-app.stage.addChild(playerSquare);
+App.stage.addChild(playerSquare);
 
 // Create box squares
-const boxSquares = boxPositions.map(() => createSquare(0x8b4513)); // Brown color
+const boxSquares = boxPositions.map(() => createSquare("brown"));
 boxPositions.forEach((position, index) =>
     placeSquare(boxSquares[index], position)
 );
-boxSquares.forEach((boxSquare) => app.stage.addChild(boxSquare));
+boxSquares.forEach((boxSquare) => App.stage.addChild(boxSquare));
 
 // Create wall squares
-const wallSquares = wallPositions.map(() => createSquare(0x000000)); // Black color
+const wallSquares = wallPositions.map(() => createSquare("grey"));
 wallPositions.forEach((position, index) =>
     placeSquare(wallSquares[index], position)
 );
-wallSquares.forEach((wallSquare) => app.stage.addChild(wallSquare));
+wallSquares.forEach((wallSquare) => App.stage.addChild(wallSquare));
 
 // Handle keyboard input
 window.addEventListener("keydown", handleKeyDown);
@@ -141,14 +134,14 @@ function isCollidingWithBoxes(position, excludeIndex = -1) {
 }
 
 function createSquare(color) {
-    const square = new PIXI.Graphics();
+    const square = new Graphics();
     square.beginFill(color);
-    square.drawRect(0, 0, tileSize, tileSize);
+    square.drawRect(0, 0, TILES_SIZE, TILES_SIZE);
     square.endFill();
     return square;
 }
 
 function placeSquare(square, position) {
-    square.x = position.col * tileSize;
-    square.y = position.row * tileSize;
+    square.x = position.col * TILES_SIZE;
+    square.y = position.row * TILES_SIZE;
 }

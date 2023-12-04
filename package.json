@@ -1,0 +1,15 @@
+{
+    "name": "Sokoban",
+    "source": "index.html",
+    "scripts": {
+        "start": "parcel",
+        "build": "parcel build"
+    },
+    "dependencies": {
+        "pixi.js": "^7.3.2"
+    },
+    "devDependencies": {
+        "constants-browserify": "^1.0.0",
+        "parcel": "latest"
+    }
+}
