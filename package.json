@@ -1,14 +1,16 @@
 {
-    "name": "Sokoban",
+    "name": "sokoban",
     "source": "index.html",
     "scripts": {
         "start": "parcel",
         "build": "parcel build"
     },
     "dependencies": {
-        "pixi.js": "^7.3.2"
+        "pixi.js": "^7.3.2",
+        "sass": "^1.69.5"
     },
     "devDependencies": {
+        "@parcel/transformer-sass": "2.10.3",
         "constants-browserify": "^1.0.0",
         "parcel": "latest"
     }

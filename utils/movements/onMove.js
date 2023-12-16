@@ -5,20 +5,15 @@ import { isCollidingWithWalls } from "../check/isCollidingWithWalls";
 import { isCollidingWithBoxes } from "../check/isCollidingWithBoxes";
 import { isOnTarget } from "../check/isOnTarget";
 
+import { showMenuAndGetStartStatus } from "../displayMenu";
+
 import { LEVEL_1 } from "../levels/level1";
 
 import { parseLevel } from "../parseLevel";
 
-let {
-    playerEntity,
-    boxEntities,
-    wallEntities,
-    targetEntities,
-    playerPosition,
-    boxPositions,
-    wallPositions,
-    targetsPositions,
-} = parseLevel(LEVEL_1);
+import { toggleWinningOverlay } from "../../components/winningOverlay";
+
+showMenuAndGetStartStatus();
 
 export function handleKeyDown(e) {
     const newPosition = { ...playerPosition };
@@ -71,7 +66,7 @@ export function handleKeyDown(e) {
                 boxPositions[boxIndex] = boxNewPosition;
 
                 if (isOnTarget(boxNewPosition, targetsPositions))
-                    console.log("Success");
+                    toggleWinningOverlay();
             }
         } else {
             // Move player if the space in the desired direction is free
