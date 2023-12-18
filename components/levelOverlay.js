@@ -1,17 +1,15 @@
 import { Graphics, Text } from "pixi.js";
 
-import { displayLevelOverlay } from "./levelOverlay";
-
 import { App } from "../app";
 
-function createMenuOverlay(resolve) {
+function createLevelOverlay(resolve) {
     const overlay = new Graphics();
 
     overlay.beginFill(0x000000, 0.7);
     overlay.drawRect(0, 0, App.renderer.width, App.renderer.height);
     overlay.endFill();
 
-    const menuText = new Text("Game Menu", {
+    const menuText = new Text("Levels", {
         fontSize: 36,
         fill: "white",
         align: "center",
@@ -20,36 +18,34 @@ function createMenuOverlay(resolve) {
     menuText.anchor.set(0.5);
     menuText.position.set(App.renderer.width / 2, App.renderer.height / 2 - 50);
 
-    const startButton = new Text("Start", {
+    const levelButton = new Text("level 1", {
         fontSize: 24,
-        fill: "white", // White color
+        fill: "white",
         align: "center",
     });
 
-    startButton.anchor.set(0.5);
-    startButton.position.set(
+    levelButton.anchor.set(0.5);
+    levelButton.position.set(
         App.renderer.width / 2,
         App.renderer.height / 2 + 50
     );
 
-    startButton.eventMode = "dynamic";
+    levelButton.eventMode = "dynamic";
 
-    startButton.on("pointerdown", async () => {
+    levelButton.on("pointerdown", () => {
         App.stage.removeChild(overlay);
-
-        await displayLevelOverlay();
 
         resolve(true);
     });
 
-    overlay.addChild(menuText, startButton);
+    overlay.addChild(menuText, levelButton);
 
     return overlay;
 }
 
-export function displayMenuOverlay() {
+export function displayLevelOverlay() {
     return new Promise((resolve) => {
-        const overlay = createMenuOverlay(resolve);
+        const overlay = createLevelOverlay(resolve);
         App.stage.addChild(overlay);
     });
 }
