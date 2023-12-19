@@ -6,5 +6,4 @@ import { handleKeyDown } from "./utils/movements/onMove";
 
 document.body.appendChild(App.view);
 
-// Handle keyboard input
 window.addEventListener("keydown", handleKeyDown);

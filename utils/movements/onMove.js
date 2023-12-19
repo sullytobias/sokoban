@@ -7,10 +7,6 @@ import { isOnTarget } from "../check/isOnTarget";
 
 import { showMenuAndGetStartStatus } from "../displayMenu";
 
-import { LEVEL_1 } from "../levels/level1";
-
-import { parseLevel } from "../parseLevel";
-
 import { toggleWinningOverlay } from "../../components/winningOverlay";
 
 showMenuAndGetStartStatus();
@@ -39,6 +35,7 @@ export function handleKeyDown(e) {
     if (!isCollidingWithWalls(newPosition, wallPositions)) {
         // Check collision with boxes
         const boxIndex = isCollidingWithBoxes(newPosition, boxPositions);
+
         if (boxIndex !== -1) {
             const newBoxPosition = { ...boxPositions[boxIndex] };
 
@@ -53,11 +50,8 @@ export function handleKeyDown(e) {
             // Move box if the space in the desired direction is free
             if (
                 !isCollidingWithWalls(boxNewPosition, wallPositions) &&
-                !isCollidingWithBoxes(
-                    boxNewPosition,
-                    boxPositions,
-                    boxIndex
-                ) !== -1
+                isCollidingWithBoxes(boxNewPosition, boxPositions, boxIndex) ===
+                    -1
             ) {
                 placeEntity(boxEntities[boxIndex], boxNewPosition);
                 placeEntity(playerEntity, newPosition);

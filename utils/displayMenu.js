@@ -1,11 +1,14 @@
-import { LEVEL_1 } from "./levels/level1";
+import { ALL_LEVELS } from "./levels";
 
 import { parseLevel } from "./parseLevel";
+import { handleOverlayDisplay } from "./handleOverlayDisplay";
 
-import { displayMenuOverlay } from "../components/menuOverlay";
+import { getSelectedLevel } from "./store/chosenLevel";
+
+import { menuOverlay } from "../components/menuOverlay";
 
 export async function showMenuAndGetStartStatus() {
-    const isStarted = await displayMenuOverlay();
+    await handleOverlayDisplay(menuOverlay);
 
     return ({
         playerEntity,
@@ -16,5 +19,5 @@ export async function showMenuAndGetStartStatus() {
         boxPositions,
         wallPositions,
         targetsPositions,
-    } = parseLevel(LEVEL_1));
+    } = parseLevel(ALL_LEVELS[getSelectedLevel()]));
 }

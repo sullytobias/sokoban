@@ -1,13 +1,15 @@
 import { Graphics, Text } from "pixi.js";
 
-import { displayLevelOverlay } from "./levelOverlay";
+import { handleOverlayDisplay } from "../utils/handleOverlayDisplay";
+
+import { levelOverlay } from "./levelOverlay";
 
 import { App } from "../app";
 
-function createMenuOverlay(resolve) {
+export function menuOverlay(resolve) {
     const overlay = new Graphics();
 
-    overlay.beginFill(0x000000, 0.7);
+    overlay.beginFill("black");
     overlay.drawRect(0, 0, App.renderer.width, App.renderer.height);
     overlay.endFill();
 
@@ -22,7 +24,7 @@ function createMenuOverlay(resolve) {
 
     const startButton = new Text("Start", {
         fontSize: 24,
-        fill: "white", // White color
+        fill: "green",
         align: "center",
     });
 
@@ -34,22 +36,17 @@ function createMenuOverlay(resolve) {
 
     startButton.eventMode = "dynamic";
 
-    startButton.on("pointerdown", async () => {
+    const chosenLevel = startButton.on("pointerdown", async () => {
         App.stage.removeChild(overlay);
 
-        await displayLevelOverlay();
+        const { level } = await handleOverlayDisplay(levelOverlay);
 
         resolve(true);
+
+        return level;
     });
 
     overlay.addChild(menuText, startButton);
 
     return overlay;
-}
-
-export function displayMenuOverlay() {
-    return new Promise((resolve) => {
-        const overlay = createMenuOverlay(resolve);
-        App.stage.addChild(overlay);
-    });
 }

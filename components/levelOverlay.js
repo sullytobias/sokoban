@@ -1,11 +1,24 @@
 import { Graphics, Text } from "pixi.js";
 
+import { ALL_LEVELS } from "../utils/levels";
+import { saveSelectedLevel } from "../utils/store/chosenLevel";
+
 import { App } from "../app";
 
-function createLevelOverlay(resolve) {
+const createLevelButtons = (levels) =>
+    levels.map(
+        (level, index) =>
+            new Text(`Level ${index + 1}`, {
+                fontSize: 24,
+                fill: "green",
+                align: "center",
+            })
+    );
+
+export function levelOverlay(resolve) {
     const overlay = new Graphics();
 
-    overlay.beginFill(0x000000, 0.7);
+    overlay.beginFill("black");
     overlay.drawRect(0, 0, App.renderer.width, App.renderer.height);
     overlay.endFill();
 
@@ -18,34 +31,27 @@ function createLevelOverlay(resolve) {
     menuText.anchor.set(0.5);
     menuText.position.set(App.renderer.width / 2, App.renderer.height / 2 - 50);
 
-    const levelButton = new Text("level 1", {
-        fontSize: 24,
-        fill: "white",
-        align: "center",
+    const levelButtons = createLevelButtons(ALL_LEVELS);
+
+    levelButtons.forEach((button, index) => {
+        button.anchor.set(0.5);
+        button.position.set(
+            App.renderer.width / 2,
+            App.renderer.height / 2 + (index + 1) * 50
+        );
+
+        button.eventMode = "dynamic";
+
+        button.on("pointerdown", () => {
+            App.stage.removeChild(overlay);
+
+            saveSelectedLevel(index);
+
+            resolve(true);
+        });
     });
 
-    levelButton.anchor.set(0.5);
-    levelButton.position.set(
-        App.renderer.width / 2,
-        App.renderer.height / 2 + 50
-    );
-
-    levelButton.eventMode = "dynamic";
-
-    levelButton.on("pointerdown", () => {
-        App.stage.removeChild(overlay);
-
-        resolve(true);
-    });
-
-    overlay.addChild(menuText, levelButton);
+    overlay.addChild(menuText, ...levelButtons);
 
     return overlay;
-}
-
-export function displayLevelOverlay() {
-    return new Promise((resolve) => {
-        const overlay = createLevelOverlay(resolve);
-        App.stage.addChild(overlay);
-    });
 }
