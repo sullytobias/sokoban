@@ -2,6 +2,7 @@ import { Graphics, Text } from "pixi.js";
 
 import { ALL_LEVELS } from "../utils/levels";
 import { saveSelectedLevel } from "../utils/store/chosenLevel";
+import { isPreviousLevelCompleted } from "../utils/store/completedLevels";
 
 import { App } from "../app";
 
@@ -10,7 +11,12 @@ const createLevelButtons = (levels) =>
         (level, index) =>
             new Text(`Level ${index + 1}`, {
                 fontSize: 24,
-                fill: "green",
+                fill:
+                    index > 0
+                        ? isPreviousLevelCompleted(index - 1)
+                            ? "green"
+                            : "grey"
+                        : "green",
                 align: "center",
             })
     );
@@ -33,6 +39,8 @@ export function levelOverlay(resolve) {
 
     const levelButtons = createLevelButtons(ALL_LEVELS);
 
+    console.log(levelButtons);
+
     levelButtons.forEach((button, index) => {
         button.anchor.set(0.5);
         button.position.set(
@@ -40,7 +48,10 @@ export function levelOverlay(resolve) {
             App.renderer.height / 2 + (index + 1) * 50
         );
 
-        button.eventMode = "dynamic";
+        if (index === 0 || isPreviousLevelCompleted(index - 1)) {
+            button.eventMode = "dynamic";
+            button.cursor = "pointer";
+        }
 
         button.on("pointerdown", () => {
             App.stage.removeChild(overlay);

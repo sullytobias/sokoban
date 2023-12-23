@@ -9,6 +9,9 @@ import { showMenuAndGetStartStatus } from "../displayMenu";
 
 import { toggleWinningOverlay } from "../../components/winningOverlay";
 
+import { getSelectedLevel } from "../store/chosenLevel";
+import { markLevelAsCompleted } from "../store/completedLevels";
+
 showMenuAndGetStartStatus();
 
 export function handleKeyDown(e) {
@@ -59,8 +62,10 @@ export function handleKeyDown(e) {
                 playerPosition = newPosition; // Update player position
                 boxPositions[boxIndex] = boxNewPosition;
 
-                if (isOnTarget(boxNewPosition, targetsPositions))
+                if (isOnTarget(boxNewPosition, targetsPositions)) {
+                    markLevelAsCompleted(getSelectedLevel());
                     toggleWinningOverlay();
+                }
             }
         } else {
             // Move player if the space in the desired direction is free
