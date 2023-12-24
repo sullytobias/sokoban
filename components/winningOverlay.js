@@ -1,17 +1,23 @@
 import { Graphics, Text } from "pixi.js";
 
+import { levelOverlay } from "./levelOverlay";
+
+import { saveSelectedLevel, goToNextLevel } from "../utils/store/chosenLevel";
+import { handleOverlayDisplay } from "../utils/handleOverlayDisplay";
+import { startLevel } from "../utils/startLevel";
+
 import { App } from "../app";
 
 function createOverlay() {
     const overlay = new Graphics();
 
-    overlay.beginFill(0x000000, 0.7); // Semi-transparent black color
+    overlay.beginFill(0x000000, 0.7);
     overlay.drawRect(0, 0, App.renderer.width, App.renderer.height);
     overlay.endFill();
 
     const message = new Text("Congratulations!\nYou won!", {
         fontSize: 36,
-        fill: "white", // White color
+        fill: "white",
         align: "center",
     });
 
@@ -27,23 +33,48 @@ export function toggleWinningOverlay() {
     const overlay = createOverlay();
     App.stage.addChild(overlay);
 
-    const closeButton = new Text("Close", {
+    const levelButton = new Text("Levels", {
         fontSize: 24,
         fill: 0xffffff,
     });
 
-    closeButton.anchor.set(0.5);
-    closeButton.position.set(
-        App.renderer.width / 2,
+    const nextLevelButton = new Text("Next Level", {
+        fontSize: 24,
+        fill: 0xffffff,
+    });
+
+    levelButton.anchor.set(0.5);
+    levelButton.position.set(
+        App.renderer.width / 3,
         App.renderer.height / 2 + 200
     );
 
-    closeButton.eventMode = "dynamic";
+    nextLevelButton.anchor.set(0.5);
+    nextLevelButton.position.set(
+        App.renderer.width / 1.5,
+        App.renderer.height / 2 + 200
+    );
 
-    closeButton.on("pointerdown", () => {
+    levelButton.eventMode = "dynamic";
+    nextLevelButton.eventMode = "dynamic";
+
+    levelButton.on("pointerdown", async () => {
         App.stage.removeChild(overlay);
-        closeButton.destroy();
+
+        await handleOverlayDisplay(levelOverlay);
+
+        levelButton.destroy();
     });
 
-    overlay.addChild(closeButton);
+    nextLevelButton.on("pointerdown", () => {
+        App.stage.removeChild(overlay);
+
+        saveSelectedLevel(goToNextLevel());
+
+        startLevel();
+
+        levelButton.destroy();
+    });
+
+    overlay.addChild(levelButton, nextLevelButton);
 }

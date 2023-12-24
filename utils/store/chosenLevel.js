@@ -5,3 +5,7 @@ export function saveSelectedLevel(selectedLevel) {
 export function getSelectedLevel() {
     return localStorage.getItem("selectedLevel");
 }
+
+export function goToNextLevel() {
+    return Number(getSelectedLevel()) + 1;
+}

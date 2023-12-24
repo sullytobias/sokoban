@@ -33,7 +33,13 @@ export function generateEntities(
     wallPositions.forEach((position, index) =>
         placeEntity(wallEntities[index], position)
     );
+
     wallEntities.forEach((wallEntity) => App.stage.addChild(wallEntity));
 
-    return { playerEntity, boxEntities, wallEntities, targetsEntities };
+    return {
+        playerEntity,
+        boxEntities,
+        wallEntities,
+        targetsEntities,
+    };
 }

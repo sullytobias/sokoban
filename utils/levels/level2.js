@@ -1,1 +1,1 @@
-export const LEVEL_2 = ["WWWWW", "WP..W", "WBB.W", "W.T.W", "WWWWW"];
+export const LEVEL_2 = ["WWWWW", "WP..W", "WB..W", "W.T.W", "WWWWW"];

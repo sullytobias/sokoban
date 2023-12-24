@@ -1,8 +1,9 @@
 import { Graphics, Text } from "pixi.js";
 
-import { handleOverlayDisplay } from "../utils/handleOverlayDisplay";
 
 import { levelOverlay } from "./levelOverlay";
+
+import { handleOverlayDisplay } from "../utils/handleOverlayDisplay";
 
 import { App } from "../app";
 
@@ -36,14 +37,12 @@ export function menuOverlay(resolve) {
 
     startButton.eventMode = "dynamic";
 
-    const chosenLevel = startButton.on("pointerdown", async () => {
+    startButton.on("pointerdown", async () => {
         App.stage.removeChild(overlay);
 
-        const { level } = await handleOverlayDisplay(levelOverlay);
+        await handleOverlayDisplay(levelOverlay);
 
         resolve(true);
-
-        return level;
     });
 
     overlay.addChild(menuText, startButton);

@@ -1,18 +1,16 @@
 import { createEntity } from "./createEntity";
 import { placeEntity } from "./placeEntity";
-
-import { generateEntities } from "./generateEntities";
+import { generateEntities, removeEntities } from "./generateEntities";
 
 import { ROW_COUNT, COL_COUNT } from "../constants";
 
-// Game state
-let playerPosition = {};
-
-const targetsPositions = [];
-const boxPositions = [];
-const wallPositions = [];
-
 export function parseLevel(levelMap) {
+    let playerPosition = {};
+
+    const targetsPositions = [];
+    const boxPositions = [];
+    const wallPositions = [];
+
     for (let row = 0; row < ROW_COUNT; row++) {
         for (let col = 0; col < COL_COUNT; col++) {
             const tile = levelMap[row][col];

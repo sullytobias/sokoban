@@ -39,8 +39,6 @@ export function levelOverlay(resolve) {
 
     const levelButtons = createLevelButtons(ALL_LEVELS);
 
-    console.log(levelButtons);
-
     levelButtons.forEach((button, index) => {
         button.anchor.set(0.5);
         button.position.set(
