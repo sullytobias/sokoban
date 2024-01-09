@@ -2,17 +2,15 @@ import { createEntity } from "./createEntity";
 import { placeEntity } from "./placeEntity";
 import { generateEntities, removeEntities } from "./generateEntities";
 
-import { ROW_COUNT, COL_COUNT } from "../constants";
-
-export function parseLevel(levelMap) {
+export function parseLevel(levelMap, size) {
     let playerPosition = {};
 
     const targetsPositions = [];
     const boxPositions = [];
     const wallPositions = [];
 
-    for (let row = 0; row < ROW_COUNT; row++) {
-        for (let col = 0; col < COL_COUNT; col++) {
+    for (let row = 0; row < size.r; row++) {
+        for (let col = 0; col < size.c; col++) {
             const tile = levelMap[row][col];
 
             if (tile === "P") playerPosition = { row, col };

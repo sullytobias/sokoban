@@ -1,5 +1,9 @@
+export function getCompletedLevels() {
+    return localStorage.getItem("completedLevels");
+}
+
 export function isPreviousLevelCompleted(level) {
-    const completedLevelsString = localStorage.getItem("completedLevels");
+    const completedLevelsString = getCompletedLevels();
     const completedLevels = JSON.parse(completedLevelsString)
         ? completedLevelsString
         : [];
@@ -8,7 +12,7 @@ export function isPreviousLevelCompleted(level) {
 }
 
 export function markLevelAsCompleted(level) {
-    const completedLevelsString = localStorage.getItem("completedLevels");
+    const completedLevelsString = getCompletedLevels();
     const completedLevels = completedLevelsString
         ? JSON.parse(completedLevelsString)
         : [];

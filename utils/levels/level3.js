@@ -1,15 +1,15 @@
 import { ROW_COUNT, COL_COUNT } from "../../constants";
 
-export const LEVEL_2 = {
+export const LEVEL_3 = {
     map: [
-        "WWWWWWWW",
-        "WP....TW",
-        "W.B....W",
+        "WWWWWWWWW",
+        "WP.....W",
         "W......W",
-        "W..B...W",
         "W......W",
+        "W......W",
+        "W...B..W",
         "WT.....W",
-        "WWWWWWWW",
+        "WWWWWWWWW",
     ],
     size: { r: ROW_COUNT, c: COL_COUNT },
 };

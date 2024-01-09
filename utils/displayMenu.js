@@ -8,6 +8,4 @@ import { menuOverlay } from "../components/menuOverlay";
 
 export async function showMenuAndGetStartStatus() {
     await handleOverlayDisplay(menuOverlay);
-
-    startLevel();
 }

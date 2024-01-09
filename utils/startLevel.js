@@ -9,6 +9,8 @@ import { App } from "../app";
 export function startLevel() {
     App.stage.removeChildren();
 
+    const { map, size } = ALL_LEVELS[getSelectedLevel()];
+
     return ({
         playerEntity,
         boxEntities,
@@ -18,6 +20,5 @@ export function startLevel() {
         boxPositions,
         wallPositions,
         targetsPositions,
-        container,
-    } = parseLevel(ALL_LEVELS[getSelectedLevel()]));
+    } = parseLevel(map, size));
 }

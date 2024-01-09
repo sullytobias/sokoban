@@ -4,6 +4,10 @@ import { ALL_LEVELS } from "../utils/levels";
 import { saveSelectedLevel } from "../utils/store/chosenLevel";
 import { isPreviousLevelCompleted } from "../utils/store/completedLevels";
 
+import { ROW_COUNT, COL_COUNT } from "../constants";
+
+import { startLevel } from "../utils/startLevel";
+
 import { App } from "../app";
 
 const createLevelButtons = (levels) =>
@@ -55,6 +59,8 @@ export function levelOverlay(resolve) {
             App.stage.removeChild(overlay);
 
             saveSelectedLevel(index);
+
+            startLevel();
 
             resolve(true);
         });
