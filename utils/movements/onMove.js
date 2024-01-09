@@ -62,7 +62,7 @@ export function handleKeyDown(e) {
                 playerPosition = newPosition; // Update player position
                 boxPositions[boxIndex] = boxNewPosition;
 
-                if (isOnTarget(boxNewPosition, targetsPositions)) {
+                if (isOnTarget(boxPositions, targetsPositions)) {
                     markLevelAsCompleted(getSelectedLevel());
                     toggleWinningOverlay();
                 }
