@@ -2,8 +2,6 @@ function compareObjects(obj1, obj2) {
     const key1 = Object.keys(obj1)[0];
     const key2 = Object.keys(obj2)[0];
 
-    debugger;
-
     return obj1[key1] - obj2[key2];
 }
 

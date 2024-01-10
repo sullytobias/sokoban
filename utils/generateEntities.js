@@ -9,26 +9,26 @@ export function generateEntities(
     wallPositions,
     targetsPositions
 ) {
-    const targetsEntities = targetsPositions.map(() => createEntity("green"));
+    const targetsEntities = targetsPositions.map(() => createEntity("box"));
 
     targetsPositions.forEach((position, index) =>
         placeEntity(targetsEntities[index], position)
     );
     targetsEntities.forEach((targetEntity) => App.stage.addChild(targetEntity));
 
-    const playerEntity = createEntity("blue");
+    const playerEntity = createEntity("box");
 
     placeEntity(playerEntity, playerPosition);
     App.stage.addChild(playerEntity);
 
-    const boxEntities = boxPositions.map(() => createEntity("brown"));
+    const boxEntities = boxPositions.map(() => createEntity("box"));
 
     boxPositions.forEach((position, index) =>
         placeEntity(boxEntities[index], position)
     );
     boxEntities.forEach((boxEntity) => App.stage.addChild(boxEntity));
 
-    const wallEntities = wallPositions.map(() => createEntity("grey"));
+    const wallEntities = wallPositions.map(() => createEntity("box"));
 
     wallPositions.forEach((position, index) =>
         placeEntity(wallEntities[index], position)
