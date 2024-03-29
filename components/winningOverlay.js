@@ -2,8 +2,14 @@ import { Graphics, Text } from "pixi.js";
 
 import { levelOverlay } from "./levelOverlay";
 
-import { saveSelectedLevel, goToNextLevel } from "../utils/store/chosenLevel";
+import {
+    saveSelectedLevel,
+    goToNextLevel,
+    getSelectedLevel,
+} from "../utils/store/chosenLevel";
 import { handleOverlayDisplay } from "../utils/handleOverlayDisplay";
+
+import { ALL_LEVELS } from "../utils/levels";
 import { startLevel } from "../utils/startLevel";
 
 import { App } from "../app";
@@ -38,25 +44,13 @@ export function toggleWinningOverlay() {
         fill: 0xffffff,
     });
 
-    const nextLevelButton = new Text("Next Level", {
-        fontSize: 24,
-        fill: 0xffffff,
-    });
-
     levelButton.anchor.set(0.5);
     levelButton.position.set(
         App.renderer.width / 3,
         App.renderer.height / 2 + 200
     );
 
-    nextLevelButton.anchor.set(0.5);
-    nextLevelButton.position.set(
-        App.renderer.width / 1.5,
-        App.renderer.height / 2 + 200
-    );
-
     levelButton.eventMode = "dynamic";
-    nextLevelButton.eventMode = "dynamic";
 
     levelButton.on("pointerdown", async () => {
         App.stage.removeChild(overlay);
@@ -66,15 +60,33 @@ export function toggleWinningOverlay() {
         levelButton.destroy();
     });
 
-    nextLevelButton.on("pointerdown", () => {
-        App.stage.removeChild(overlay);
+    if (getSelectedLevel() < ALL_LEVELS.length - 1) {
+        // If there is a next level available
+        const nextLevelButton = new Text("Next Level", {
+            fontSize: 24,
+            fill: 0xffffff,
+        });
 
-        saveSelectedLevel(goToNextLevel());
+        nextLevelButton.eventMode = "dynamic";
 
-        startLevel();
+        nextLevelButton.anchor.set(0.5);
+        nextLevelButton.position.set(
+            App.renderer.width / 1.5,
+            App.renderer.height / 2 + 200
+        );
 
-        levelButton.destroy();
-    });
+        nextLevelButton.on("pointerdown", () => {
+            App.stage.removeChild(overlay);
 
-    overlay.addChild(levelButton, nextLevelButton);
+            saveSelectedLevel(goToNextLevel());
+
+            startLevel();
+
+            nextLevelButton.destroy();
+        });
+
+        overlay.addChild(levelButton, nextLevelButton);
+    }
+
+    overlay.addChild(levelButton);
 }

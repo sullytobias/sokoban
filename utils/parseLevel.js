@@ -15,7 +15,7 @@ export function parseLevel(levelMap, size) {
 
             if (tile === "P") playerPosition = { row, col };
             else if (tile === "B") boxPositions.push({ row, col });
-            else if (tile === "W") wallPositions.push({ row, col });
+            else if (tile === "#") wallPositions.push({ row, col });
             else if (tile === "T") targetsPositions.push({ row, col });
         }
     }
